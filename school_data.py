@@ -90,24 +90,27 @@ def main():
     # Index for the enrollment_data array corresponding to the input school
     school_index = 0
 
-    # Prompt for user input
-    try: 
-        user_input = input("Please enter the highschool name or school code: ")
-        # Check that the provided school name or code is valid
-        isSchool = False
-        for row, school_id in schools.items():
-            if user_input in school_id:
-                isSchool = True
-                school_index = row
-                break 
+    # Prompt for user input until they enter a valid input.
+    while True:
+        try: 
+            user_input = input("Please enter the highschool name or school code: ")
+            # Check that the provided school name or code is valid
+            isSchool = False
+            for row, school_id in schools.items():
+                if user_input in school_id:
+                    isSchool = True
+                    # Set the school index based on the row of the dictionary
+                    school_index = row
+                    break 
+                else:
+                    isSchool = False
+            # Raise ValueError exception if not valid
+            if isSchool == False:
+                raise ValueError("You must enter a valid school name or code.")
             else:
-                isSchool = False
-        # Raise ValueError exception if not valid
-        if isSchool == False:
-            raise ValueError("You must enter a valid school name or code.")
-    except ValueError as err:
-        print(err)
-        return
+                break
+        except ValueError as err:
+            print(err)
     
     # The following section calculates statistics for the school indicated by the user. 
     print("\n***Requested School Statistics***\n")
